@@ -6,6 +6,7 @@ Huy Huynh
 Mittranj Pansuriya
 Nikhil Agarwal
 Deepti Srinivasan
+
 Team Name: The Shooting Stars
 
 Project Title: Key Signature
