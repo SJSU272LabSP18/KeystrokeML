@@ -1,5 +1,7 @@
 # Project-Team-7
 
+As we discussed in the class, key sugnature one sounds interesting. Make sure you have enough challenges in the  project for 4 persons. Are you planning  to use ML models?
+
 Team 7 Members:
 
 Huy Huynh
