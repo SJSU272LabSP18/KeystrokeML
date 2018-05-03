@@ -13,10 +13,7 @@ public class Main extends JFrame
     static final String newline = System.getProperty("line.separator");
 
     public static void main(String[] args) {
-        /* Use an appropriate Look and Feel */
         try {
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
         } catch (UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
@@ -91,6 +88,7 @@ public class Main extends JFrame
 
     /** Handle the key typed event from the text field. */
     public void keyTyped(KeyEvent e) {
+        //No need to do anything during duration of keydown
         //displayInfo(e, "KEY TYPED: ");
     }
 
@@ -123,7 +121,7 @@ public class Main extends JFrame
      */
     private void displayInfo(KeyEvent e, String keyStatus){
 
-        //You should only rely on the key char if the event
+        //Only rely on the key char if the event
         //is a key typed event.
         int id = e.getID();
         String keyString;
@@ -139,6 +137,13 @@ public class Main extends JFrame
                     + ")";
         }
 
+        long millis = System.currentTimeMillis();
+        String timeStamp="Time Stamp = "+millis;
+        displayArea.append(keyStatus + newline
+                + "    " + keyString + newline
+                + "    " + timeStamp + newline);
+        displayArea.setCaretPosition(displayArea.getDocument().getLength());
+        /*
         int modifiersEx = e.getModifiersEx();
         String modString = "extended modifiers = " + modifiersEx;
         String tmpString = KeyEvent.getModifiersExText(modifiersEx);
@@ -154,7 +159,7 @@ public class Main extends JFrame
         } else {
             actionString += "NO";
         }
-
+        /*
         String locationString = "key location: ";
         int location = e.getKeyLocation();
         if (location == KeyEvent.KEY_LOCATION_STANDARD) {
@@ -168,17 +173,12 @@ public class Main extends JFrame
         } else { // (location == KeyEvent.KEY_LOCATION_UNKNOWN)
             locationString += "unknown";
         }
-        long millis = System.currentTimeMillis();
-        String timeStamp="Time Stamp = "+millis;
+
         /*displayArea.append(keyStatus + newline
                 + "    " + keyString + newline
                 + "    " + modString + newline
                 + "    " + actionString + newline
                 + "    " + locationString + newline);*/
 
-        displayArea.append(keyStatus + newline
-                + "    " + keyString + newline
-                + "    " + timeStamp + newline);
-        displayArea.setCaretPosition(displayArea.getDocument().getLength());
     }
 }
