@@ -1,8 +1,11 @@
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import javax.swing.*;
 public class Main extends JFrame
         implements KeyListener,
@@ -11,6 +14,123 @@ public class Main extends JFrame
     JTextArea displayArea;
     JTextField typingArea;
     static final String newline = System.getProperty("line.separator");
+    KeyInput curr_key;
+    private List<KeyInput> Keys=new List<KeyInput>() {
+        @Override
+        public int size() {
+            return 0;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            return false;
+        }
+
+        @Override
+        public Iterator<KeyInput> iterator() {
+            return null;
+        }
+
+        @Override
+        public Object[] toArray() {
+            return new Object[0];
+        }
+
+        @Override
+        public <T> T[] toArray(T[] a) {
+            return null;
+        }
+
+        @Override
+        public boolean add(KeyInput KeyInput) {
+            return false;
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            return false;
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends KeyInput> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends KeyInput> c) {
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public void clear() {
+
+        }
+
+        @Override
+        public KeyInput get(int index) {
+            return null;
+        }
+
+        @Override
+        public KeyInput set(int index, KeyInput element) {
+            return null;
+        }
+
+        @Override
+        public void add(int index, KeyInput element) {
+
+        }
+
+        @Override
+        public KeyInput remove(int index) {
+            return null;
+        }
+
+        @Override
+        public int indexOf(Object o) {
+            return 0;
+        }
+
+        @Override
+        public int lastIndexOf(Object o) {
+            return 0;
+        }
+
+        @Override
+        public ListIterator<KeyInput> listIterator() {
+            return null;
+        }
+
+        @Override
+        public ListIterator<KeyInput> listIterator(int index) {
+            return null;
+        }
+
+        @Override
+        public List<KeyInput> subList(int fromIndex, int toIndex) {
+            return null;
+        }
+    };
 
     public static void main(String[] args) {
         try {
@@ -68,7 +188,7 @@ public class Main extends JFrame
         //focus traversal keys, such as Tab and Shift Tab.
         //If you uncomment the following line of code, this
         //disables focus traversal and the Tab events will
-        //become available to the key event listener.
+        //become available to the curr_key event listener.
         //typingArea.setFocusTraversalKeysEnabled(false);
 
         displayArea = new JTextArea();
@@ -86,19 +206,31 @@ public class Main extends JFrame
     }
 
 
-    /** Handle the key typed event from the text field. */
+    /** Handle the curr_key typed event from the text field. */
     public void keyTyped(KeyEvent e) {
         //No need to do anything during duration of keydown
         //displayInfo(e, "KEY TYPED: ");
     }
 
-    /** Handle the key pressed event from the text field. */
+    /** Handle the curr_key pressed event from the text field. */
     public void keyPressed(KeyEvent e) {
+
+        //set value for currKey
+        curr_key =new KeyInput();
+        curr_key.setKeyCode(e.getKeyCode());
+        curr_key.setKeyDownTime(System.nanoTime()/1000);//get timestamp by microsec
+
+        //display on UI
         displayInfo(e, "KEY PRESSED: ");
     }
 
-    /** Handle the key released event from the text field. */
+    /** Handle the curr_key released event from the text field. */
     public void keyReleased(KeyEvent e) {
+        //set key up time and and save to Keys List
+        curr_key.setKeyUpTime(System.nanoTime()/1000);
+        Keys.add(curr_key);
+
+        //Display to UI
         displayInfo(e, "KEY RELEASED: ");
     }
 
@@ -121,24 +253,24 @@ public class Main extends JFrame
      */
     private void displayInfo(KeyEvent e, String keyStatus){
 
-        //Only rely on the key char if the event
-        //is a key typed event.
+        //Only rely on the curr_key char if the event
+        //is a curr_key typed event.
         int id = e.getID();
         String keyString;
 
         if (id == KeyEvent.KEY_TYPED) {
             char c = e.getKeyChar();
-            keyString = "key character = '" + c + "'";
+            keyString = "curr_key character = '" + c + "'";
         } else {
             int keyCode = e.getKeyCode();
-            keyString = "key code = " + keyCode
+            keyString = "curr_key code = " + keyCode
                     + " ("
                     + KeyEvent.getKeyText(keyCode)
                     + ")";
         }
 
-        long millis = System.currentTimeMillis();
-        String timeStamp="Time Stamp = "+millis;
+        long micro = System.nanoTime()/1000;
+        String timeStamp="Time Stamp = "+micro;
         displayArea.append(keyStatus + newline
                 + "    " + keyString + newline
                 + "    " + timeStamp + newline);
@@ -153,14 +285,14 @@ public class Main extends JFrame
             modString += " (no extended modifiers)";
         }
 
-        String actionString = "action key? ";
+        String actionString = "action curr_key? ";
         if (e.isActionKey()) {
             actionString += "YES";
         } else {
             actionString += "NO";
         }
         /*
-        String locationString = "key location: ";
+        String locationString = "curr_key location: ";
         int location = e.getKeyLocation();
         if (location == KeyEvent.KEY_LOCATION_STANDARD) {
             locationString += "standard";
@@ -179,6 +311,13 @@ public class Main extends JFrame
                 + "    " + modString + newline
                 + "    " + actionString + newline
                 + "    " + locationString + newline);*/
+
+    }
+
+    //Save to CSV all the Keys
+    //Hint: Use Calculation class
+    public void saveToCSV(String CSVFilePath)
+    {
 
     }
 }

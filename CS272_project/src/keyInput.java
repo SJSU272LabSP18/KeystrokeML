@@ -1,26 +1,32 @@
-import java.lang.*;
-public class keyInput {
+import jdk.jshell.spi.ExecutionControl;
 
-    int keyUpTime;
-    public int getKeyUp() {
-        return keyUpTime;
+import java.awt.event.KeyEvent;
+import java.lang.*;
+public class KeyInput {
+    //set keycode and return String value
+    int keyCode;
+    public void setKeyCode(int keyCode) {
+        this.keyCode = keyCode;
+    }
+    public String getKeyStr(){
+        return KeyEvent.getKeyText(keyCode);
     }
 
-    public void setKeyUpTime(int keyUpTime) {
+    //Get set keyUpTime
+    long keyUpTime;
+    public long getKeyUpTime() {
+        return keyUpTime;
+    }
+    public void setKeyUpTime(long keyUpTime) {
         this.keyUpTime = keyUpTime;
     }
 
-    int keyDownTime;
-
-    public int getKeyDownTime() {
+    //Get Set keyDownTime
+    long keyDownTime;
+    public long getKeyDownTime() {
         return keyDownTime;
     }
-
-    public void setKeyDownTime(int keyDownTime) {
+    public void setKeyDownTime(long keyDownTime) {
         this.keyDownTime = keyDownTime;
-    }
-    public void saveToCSV(String CSVFilePath)
-    {
-
     }
 }
